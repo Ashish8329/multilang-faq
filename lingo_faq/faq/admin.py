@@ -17,6 +17,7 @@ class FAQAdmin(BaseAdmin):
                     "question",
                     "answer",
                     "language",
+                    "translations",
                 )
             },
         ),

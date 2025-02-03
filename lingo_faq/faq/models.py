@@ -23,6 +23,11 @@ class FAQ(BaseModel):
         default=LanguageChoices.ENGLISH.value[0],
         help_text=LanguageChoices.get_help_text(),
     )
+    translations = models.JSONField(
+        verbose_name=_("Translations"),
+        help_text=_("Enter translations for multiple languages"),
+        default=dict,
+    )
 
     class Meta:
         verbose_name = _("FAQ")
