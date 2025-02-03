@@ -24,9 +24,10 @@ class FAQ(BaseModel):
         help_text=LanguageChoices.get_help_text(),
     )
     translations = models.JSONField(
+        blank=True,
+        null=True,
         verbose_name=_("Translations"),
         help_text=_("Enter translations for multiple languages"),
-        default=dict,
     )
 
     class Meta:
