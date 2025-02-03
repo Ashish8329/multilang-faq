@@ -1,11 +1,12 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
+from . import views
 
-from .views import FAQViewSet
-
-router = DefaultRouter()
-router.register(r"faq", FAQViewSet)
 
 urlpatterns = [
-    path("", include(router.urls)),
+    path(
+        "",
+        views.FAQViewSet.as_view({"get": "list", "post": "create"}),
+        name="faq-list",
+    ),
 ]
