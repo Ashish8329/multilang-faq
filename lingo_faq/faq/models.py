@@ -20,6 +20,7 @@ class FAQ(BaseModel):
         max_length=2,
         choices=[x.value for x in LanguageChoices],
         verbose_name=_("Language"),
+        default=LanguageChoices.ENGLISH.value[0],
         help_text=LanguageChoices.get_help_text(),
     )
 
