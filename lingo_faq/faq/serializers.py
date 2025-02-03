@@ -8,8 +8,7 @@ class FAQSerializer(serializers.ModelSerializer):
         model = FAQ
         fields = [
             "id",
-            "question",
-            "answer",
+            "translations",
             "created_at",
             "modified_at",
         ]
