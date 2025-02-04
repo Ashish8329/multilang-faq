@@ -75,20 +75,20 @@ python3 manage.py createsuperuser
 Follow the prompts to set up the superuser credentials. 
 
  
-## 4. Run celery with flower: 
+## 5. Run celery with flower: 
 After the project is successfully set up, run the celery using the following command:
 ```
 celery -A lingo_faq flower --detach
 ```
 
-## 5. Run celery with log for debug: 
+## 6. Run celery with log for debug: 
 Run the celery debug using the following command:
 ```
 celery -A lingo_faq worker --loglevel=debug
 ```
  
 
-## 6. Run the Development Server: 
+## 7. Run the Development Server: 
 After the project is successfully set up, create a superuser using the following command:
 ```
 python manage.py runserver
@@ -105,6 +105,6 @@ We welcome contributions! Please follow these steps:
 > Commit with clear messages (e.g., feat: Add multilingual FAQ model).
 > Push changes and create a pull request.
 
-
-## 8. Explore the Multilang system: :sparkles:'
+---
+## Explore the Multilang system: :sparkles:'
 :point_right: **Congratulations**:balloon:!:tada::tada: Your Multilang system is now ready to explore.:confetti_ball:	:balloon: :point_left:
