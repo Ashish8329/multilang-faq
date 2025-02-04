@@ -4,7 +4,8 @@ def filter_by_language(data, lang):
     """
     output_data = []
     for faq in data:
-        if lang in faq["translations"]:
-            faq["translations"] = {lang: faq["translations"][lang]}
+        translations = faq.get("translations", {})  # Default to empty dict if None
+        if isinstance(translations, dict) and lang in translations:
+            faq["translations"] = {lang: translations[lang]}
             output_data.append(faq)
     return output_data
