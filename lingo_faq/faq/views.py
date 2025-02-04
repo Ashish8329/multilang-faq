@@ -2,9 +2,11 @@ from django.core.cache import cache
 from django.shortcuts import render
 from django.views.decorators.cache import cache_page
 from rest_framework import viewsets
+from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
 from base.base_views import CustomViewSet
+from faq.choices import LanguageChoices
 
 from .models import FAQ
 from .serializers import FAQSerializer
@@ -24,6 +26,15 @@ class FAQViewSet(CustomViewSet):
         Return a list of all the FAQs in the database with the requested language.
         """
         param = request.query_params.get("lang")
+
+        if param:
+            # get lanugage code from the enum  chiuces
+            lang_codes = [lang[0] for lang in LanguageChoices.choices()]
+
+            # check if the language code is valid
+            if param not in lang_codes:
+                raise ValidationError("Invalid language code")
+
         data = self.get_queryset()
         serialized_data = self.serializer_class(data, many=True).data
 
@@ -63,5 +74,4 @@ class FAQViewSet(CustomViewSet):
 
         # If no 'lang' parameter is provided, filter by 'en' by default
         output_data = filter_by_language(serialized_data, "en")
-        cache.set(cache_key, output_data, 60)
         return Response(output_data)
