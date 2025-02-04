@@ -1,4 +1,6 @@
+from django.core.cache import cache
 from django.shortcuts import render
+from django.views.decorators.cache import cache_page
 from rest_framework import viewsets
 from rest_framework.response import Response
 
@@ -27,9 +29,18 @@ class FAQViewSet(CustomViewSet):
 
         # If the 'lang' parameter is provided, filter accordingly
         if param:
+
+            cache_key = f"faq_{param}"
+            cached_data = cache.get(cache_key)
+
+            # check if the data is in the cache
+            if cached_data:
+                return Response(cached_data)
+
             if param == "en":
                 # Filter by 'en' translations
                 output_data = filter_by_language(serialized_data, "en")
+                cache.set(cache_key, output_data, 60)
                 return Response(output_data)
 
             # Collect all available translation keys
@@ -40,13 +51,17 @@ class FAQViewSet(CustomViewSet):
             if param in translations:
                 # Filter by the requested language
                 output_data = filter_by_language(serialized_data, param)
+                cache.set(cache_key, output_data, 60)
                 return Response(output_data)
+
             else:
                 # If the language is not found, return a message with filter by 'en' by default
                 output_data = filter_by_language(serialized_data, "en")
                 output_data.append({"message": "No data found for the language"})
+                cache.set(cache_key, output_data, 60)
                 return Response(output_data)
 
         # If no 'lang' parameter is provided, filter by 'en' by default
         output_data = filter_by_language(serialized_data, "en")
+        cache.set(cache_key, output_data, 60)
         return Response(output_data)
