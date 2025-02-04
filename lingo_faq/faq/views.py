@@ -63,5 +63,4 @@ class FAQViewSet(CustomViewSet):
 
         # If no 'lang' parameter is provided, filter by 'en' by default
         output_data = filter_by_language(serialized_data, "en")
-        cache.set(cache_key, output_data, 60)
         return Response(output_data)
