@@ -9,7 +9,7 @@ def create_faq_translation(sender, instance, created, **kwargs):
     """
     Using djngo signals to create translations for the FAQ model
     """
-    if created:
+    if created:  # TODO celery task regostration
         instance.translations = {
             instance.language: {
                 "question": instance.question,
