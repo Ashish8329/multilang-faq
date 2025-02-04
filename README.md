@@ -37,69 +37,67 @@ Uses Google Translate API (googletrans) for automatic translation. Fallback to E
 
 Follow the steps below to set up the Multilang FAQ System:
 
-## 1 **Clone the Repository:** 
+## 1 . **Clone the Repository:** 
 Clone this repository to your local machine using the following command: 
  
   
   ```
  git clone https://github.com/Ashish8329/multilang-faq.git
-```
-
-## 2 **Install Docker:(Not Required)** 
-Make sure Docker is installed on your system. If not,
-> [!TIP]
-> download and install it from [here](https://www.docker.com/get-started).
-    
-## 3 . Set Up a Virtual Environment
+``` 
+## 2 . Set Up a Virtual Environment
 > [!IMPORTANT]
 > Before proceeding, it's recommended to set up a Python virtual environment for the project.
 ```
  python3 -m venv venv
-source venv/bin/activate  # On Windows use `venv\Scripts\activate`
 ```
+> [!IMPORTANT]
+> Activate Virtual env 
+```
+source venv/bin/activate
+```
+> [!IMPORTANT]
 > Install Dependencies
 ```
  pip install -r requirements.txt
 ```
 
-## 5.  Navigate to Project Directory: 
+## 3.  Navigate to Project Directory: 
 Go to the directory where you cloned the repository.
 ```
  cd lingo_faq
 ```
  
-## 6.  Build and Run Docker: 
-Ensure Docker is running in the background. Navigate to the main directory of the project and run:
-##4. Navigate to Project Directory:
-Go to the directory where you cloned the repository.
-> [!NOTE]
-> # For the first time
-
-  ```
-  docker-compose up --build   
-```
-Or
-> [!NOTE]
-> # For subsequent runs
-```
-docker-compose up   
-```
-
-## 7. Create Superuser: 
+## 4. Create Superuser: 
 After the project is successfully set up, create a superuser using the following command:
 ```
 python3 manage.py createsuperuser 
 ```
 Follow the prompts to set up the superuser credentials. 
 
-## 8. Run the Development Server: 
+ 
+## 4. Run celery with flower: 
+After the project is successfully set up, run the celery using the following command:
+```
+celery -A lingo_faq flower --detach
+```
+
+## 5. Run celery with log for debug: 
+Run the celery debug using the following command:
+```
+celery -A lingo_faq worker --loglevel=debug
+```
+ 
+
+## 6. Run the Development Server: 
 After the project is successfully set up, create a superuser using the following command:
 ```
 python manage.py runserver
 ```
 Now visit http://127.0.0.1:8000/admin/ to manage FAQs.
+For Flawer visit http://localhost:5555/workers.
 
 ---
+
 ## Contribution Guidelines
 We welcome contributions! Please follow these steps:
 > Fork the repository.
