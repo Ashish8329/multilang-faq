@@ -5,6 +5,7 @@ class ChoiceEnum(Enum):
     """
     Base class for creating Django model field choices.
     """
+
     @classmethod
     def get_value(cls, member):
         return cls[member].value[0]
@@ -25,3 +26,11 @@ class ChoiceEnum(Enum):
         return "Choices include:\n" + "\n".join(
             f"- '{item.value[0]}': {item.value[1]}" for item in cls
         )
+
+    @classmethod
+    def choices(cls):
+        """
+        Returns the choices as a list of tuples,
+        where each tuple is (value, label)
+        """
+        return [(item.value[0], item.value[1]) for item in cls]
