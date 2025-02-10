@@ -1,0 +1,26 @@
+services:
+  db:
+    image: postgres
+    container_name: faq_db
+    environment:
+      - POSTGRES_DB=faq_db
+      - POSTGRES_USER=faq_user
+      - POSTGRES_PASSWORD=root
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  web:
+    image: django_faq
+    container_name: lingo_faq_container
+    ports:
+      - "8000:8000"
+    develop:
+      watch:
+        - action: rebuild
+          path: requirements.txt
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
+   

@@ -1,0 +1,24 @@
+# Base build stage
+FROM python:3.13-slim AS builder
+ 
+# Create the app directory
+RUN mkdir /app
+ 
+# Set the working directory
+WORKDIR /app
+ 
+# Set environment variables to optimize Python
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1 
+
+ 
+# Copy the requirements file first (better caching)
+COPY requirements.txt /app/
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+ 
